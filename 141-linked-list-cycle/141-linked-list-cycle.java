@@ -15,19 +15,16 @@ public class Solution {
             return false;
         if(head.next==null)
             return false;
+        HashSet<ListNode> hs=new HashSet<>();
         
-        ListNode slow=head;
-        ListNode fast=head;
-        
-        while(fast.next!=null && fast.next.next!=null)
+        while(head!=null)
         {
-            if(slow.next!=null)slow=slow.next;
-            if(fast.next.next!=null) fast=fast.next.next;
-             if(fast==slow)return true;
+            if(hs.contains(head))
+                return true;
+            hs.add(head);
+            head=head.next;
         }
-       
         return false;
-        
         
     }
 }
