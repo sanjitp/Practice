@@ -47,35 +47,30 @@ class gfg
 
 class Solution 
 { 
-    static int helper(int W, int wt[], int val[], int n,int[][] dp)
-    {
-        if(n==0 || W==0)
-         return 0;
-         
-         if(dp[n][W]!=-1)
-         return dp[n][W];
-         
-         if(wt[n-1]<=W)
-         return dp[n][W]=Math.max(val[n-1]+ helper(W-wt[n-1],wt,val,n-1,dp),helper(W,wt,val,n-1,dp));
-    
-         else 
-         return dp[n][W]=helper(W,wt,val,n-1,dp);
-         
-         
-    }
     static int knapSack(int W, int wt[], int val[], int n) 
     { 
-        int[][] dp=new int[n+1][W+1];
-        for(int i=0;i<n+1;i++)
+        int i, w;
+        int K[][] = new int[n + 1][W + 1];
+ 
+        // Build table K[][] in bottom up manner
+        for (i = 0; i <= n; i++)
         {
-            for(int j=0;j<W+1;j++)
+            for (w = 0; w <= W; w++)
             {
-                dp[i][j]=-1;
+                if (i == 0 || w == 0)
+                    K[i][w] = 0;
+                else if (wt[i - 1] <= w)
+                    K[i][w]
+                        = Math.max(val[i - 1]
+                         + K[i - 1][w - wt[i - 1]],
+                         K[i - 1][w]);
+                else
+                    K[i][w] = K[i - 1][w];
             }
         }
-         int res=helper(W,wt,val,n,dp);
-         return res;
-    } 
+ 
+        return K[n][W];
+    }
 }
 
 
