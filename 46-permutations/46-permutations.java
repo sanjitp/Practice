@@ -1,27 +1,34 @@
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> res=new ArrayList<>();
-        ArrayList<Integer> ds=new ArrayList<>();
-        boolean[] freq=new boolean[nums.length];
-        helper(nums,res,ds,freq);
+        helper(0,nums,res);
         return res;
     }
-    public static  void helper(int[] nums,List<List<Integer>> res,ArrayList<Integer> ds,boolean[] freq)
+    
+    public void swap(int a,int b,int[] nums)
     {
-        if(ds.size()==nums.length){
-        res.add(new ArrayList<>(ds));
-        return;
-        }
-        for(int i=0; i<nums.length;i++)
+        int temp=nums[a];
+        nums[a]=nums[b];
+        nums[b]=temp;
+        
+    }
+    public void helper(int ind,int[] nums,List<List<Integer>> res)
+    {   
+        // if ind reaches end store the swapped array in a ds since it's a combination
+        if(ind==nums.length)
         {
-            if(!freq[i])
-            {
-                freq[i]= true;
-                ds.add(nums[i]);
-                helper(nums,res,ds,freq);
-                ds.remove(ds.size()-1);
-                freq[i]=false;
-            }
+            List<Integer> ds=new ArrayList<>();
+            for(int i =0;i<nums.length;i++)
+               ds.add(nums[i]);
+            res.add(ds);
+            return;
         }
-}
+        
+        for(int i=ind;i<nums.length;i++)
+        {
+            swap(i,ind,nums);
+            helper(ind+1,nums,res);
+            swap(i,ind,nums);
+        }
+    }
 }
