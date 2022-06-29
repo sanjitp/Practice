@@ -1,48 +1,17 @@
 class Solution {
     public List<List<String>> solveNQueens(int n) {
-        char[][] board=new char[n][n];
-        
+      char[][] board=new char[n][n];
+      List<List<String>> res=new ArrayList<List<String>>();
         for(int i=0;i<n;i++)
             for(int j=0;j<n;j++)
                 board[i][j]='.';
-        
-        List<List<String>> res=new ArrayList<List<String>>();
-        helper(0,board,res,n);
+        int[] left=new int[n];
+        int[] ub=new int[2*n-1];
+        int[] lb=new int[2*n-1];
+        helper(0,res,board,left,ub,lb,n);
         return res;
     }
-    
-    //validate funtion to check whether a queen can be placed at a given index
-    public boolean validate(int row,int col,char[][] board)
-    {
-        int duprow=row;
-        int dupcol=col;
-        
-        while(row>=0 && col>=0){
-            if(board[row][col]=='Q')return false;
-            row--;
-            col--;
-        }
-        row=duprow;
-        col=dupcol;
-        
-        while(col>=0)
-        {
-            if(board[row][col]=='Q') return false;
-            col--;
-        }
-        row=duprow;
-        col=dupcol;
-        while(col>=0 && row<board.length )
-        {
-            if(board[row][col]=='Q') return false;
-            row++;
-            col--;
-        } 
-        return true;
-    }
-    
-    
-    public void helper(int col,char[][] board,List<List<String>> res,int n)
+    public void helper(int col,List<List<String>> res,char[][] board,int[] left,int[] ub,int[] lb,int n)
     {
         if(col==board.length)
         {
@@ -52,14 +21,20 @@ class Solution {
         
         for(int row=0;row<board.length;row++)
         {
-            if(validate(row,col,board)){
-            board[row][col]='Q';
-            helper(col+1,board,res,n);
-            board[row][col]='.';
+            if(left[row]==0 && lb[row+col]==0 && ub[board.length-1+col-row]==0 )
+            {
+                board[row][col]='Q';
+                left[row]=1;
+                lb[row+col]=1;
+                ub[board.length-1 +col-row]=1;
+                helper(col+1,res,board,left,ub,lb,n);
+                board[row][col]='.';
+                left[row]=0;
+                lb[row+col]=0;
+                ub[board.length-1 +col-row]=0;
             }
         }
     }
-    
     public List<String> construct(char[][] board)
     {
         List<String> res=new LinkedList<String>();
