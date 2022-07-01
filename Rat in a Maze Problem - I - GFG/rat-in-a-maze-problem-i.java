@@ -56,7 +56,8 @@ class Solution {
         }
         
         //downward direction
-        if(i+1<n && vis[i][j]==0 && m[i+1][j]==1)
+        
+        if(i+1<n && vis[i+1][j]!=1 && m[i+1][j]==1)
         {
             vis[i][j]=1;
             solve(i+1,j,m,ans,move+ "D",vis,n);
@@ -64,15 +65,17 @@ class Solution {
         }
         
         //left direction
-        if(j-1>=0 && vis[i][j]==0 && m[i][j-1]==1)
+        
+        if(j-1>=0 && vis[i][j-1]!=1 && m[i][j-1]==1)
         {
             vis[i][j]=1;
             solve(i,j-1,m,ans,move+ "L",vis,n);
             vis[i][j]=0;
         }
         
-        //right direction
-        if(j+1<n && vis[i][j]==0 && m[i][j+1]==1)
+        //Right Direction
+        
+        if(j+1<n && vis[i][j+1]!=1 && m[i][j+1]==1)
         {
             vis[i][j]=1;
             solve(i,j+1,m,ans,move+ "R",vis,n);
@@ -80,7 +83,7 @@ class Solution {
         }
         
         //upward direction
-        if(i-1>=0 && vis[i][j]==0 && m[i-1][j]==1)
+        if(i-1>=0 && vis[i-1][j]!=1 && m[i-1][j]==1)
         {
             vis[i][j]=1;
             solve(i-1,j,m,ans,move+ "U",vis,n);
