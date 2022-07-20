@@ -5,22 +5,22 @@ class Solution {
         return res;
     }
     
-    public void find(int ind,int[] arr,int target,List<List<Integer>> res,ArrayList<Integer> ans)
+    public void find(int ind,int[] arr,int target,List<List<Integer>> res,List<Integer> ds)
     {
-        if(ind==arr.length)
+        if(arr.length==ind)
         {
             if(target==0)
             {
-                res.add(new ArrayList<Integer>(ans));
+                res.add(new ArrayList<Integer>(ds));
             }
             return;
         }
-        if(arr[ind]<= target)
+        if(arr[ind]<=target)
         {
-            ans.add(arr[ind]);
-            find(ind,arr,target-arr[ind],res,ans);
-            ans.remove(ans.size()-1);
+            ds.add(arr[ind]);
+            find(ind,arr,target-arr[ind],res,ds);
+            ds.remove(ds.size()-1);
         }
-        find(ind+1,arr,target,res,ans);
+        find(ind+1,arr,target,res,ds);
     }
 }
